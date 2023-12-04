@@ -18,10 +18,9 @@ public class Differ {
         String extension = getExtension(filePath1);
         Map<String, Object> map1 = getMap(filePath1, extension);
         Map<String, Object> map2 = getMap(filePath2, extension);
-        List<Map<String,Object>> differList = TreeDiff.getDifferList(map1, map2);
+        List<Map<String, Object>> differList = TreeDiff.getDifferList(map1, map2);
         return formatter(differList, formatName);
     }
-
     public static Map<String, Object> getMap(String filePath, String formatName) throws Exception {
         String content = Files.readString(getPath(filePath));
         return parser(content, formatName);

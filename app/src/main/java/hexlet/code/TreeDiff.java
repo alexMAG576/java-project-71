@@ -7,8 +7,8 @@ public class TreeDiff {
     private static final String UPDATED = "UPDATED";
     private static final String ADDED = "ADDED";
     private static final String REMOVED = "REMOVED";
-    public static List<Map<String,Object>>  getDifferList(Map<String, Object> map1, Map<String, Object> map2) {
-        List<Map<String,Object>> diffList = new ArrayList<>();
+    public static List<Map<String, Object>>  getDifferList(Map<String, Object> map1, Map<String, Object> map2) {
+        List<Map<String, Object>> diffList = new ArrayList<>();
         diffList.clear();
         Set<String> allKeys = new TreeSet<>();
         allKeys.addAll(map1.keySet());
@@ -39,8 +39,8 @@ public class TreeDiff {
         }
         return diffList;
     }
-    public static Map<String,Object> putHm(String type, String key, Object valueMap1, Object valueMap2) {
-        var hM = new LinkedHashMap<String,Object>();
+    public static Map<String, Object> putHm(String type, String key, Object valueMap1, Object valueMap2) {
+        var hM = new LinkedHashMap<String, Object>();
         hM.put("type", type);
         hM.put("key", key);
         hM.put("value", valueMap1);

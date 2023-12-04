@@ -14,10 +14,10 @@ public class Parser {
 
         if (extension.equals("yml")) {
             objectMapper = new YAMLMapper();
-            map = objectMapper.readValue(content, new TypeReference<>() {});
+            map = objectMapper.readValue(content, new TypeReference<>() { });
         } else if (extension.equals("json")) {
             objectMapper = new ObjectMapper();
-            map = objectMapper.readValue(content, new TypeReference<>() {});
+            map = objectMapper.readValue(content, new TypeReference<>() { });
         } else {
             throw new IllegalArgumentException("Wrong extension - " + extension);
         }
