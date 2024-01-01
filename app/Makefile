@@ -11,6 +11,6 @@ build:
 	./gradlew clean build
 
 report:
-	./gradlew jacocoTestReport
+	gradle jacocoTestReport
 
 .PHONY: build
