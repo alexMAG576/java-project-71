@@ -1,22 +1,27 @@
 package hexlet.code;
 
-import hexlet.code.formatters.Json;
 import hexlet.code.formatters.Plain;
 import hexlet.code.formatters.Stylish;
+import hexlet.code.formatters.Json;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Formatter {
-    public static String formatter(List<Map<String, Object>> diffList, String format) throws IOException {
-        return switch (format.toLowerCase()) {
-            case ("stylish") -> Stylish.stylish(diffList);
-            case ("plain") -> Plain.plain(diffList);
-            case ("json") -> Json.json(diffList);
-            default -> throw new IllegalArgumentException(
-                    String.format("Wrong format. Supported: %s, %s, %s", "stylish", "plain", "json")
-            );
-        };
+    public static String formatter(List<Map<String, Object>> dataForFormatting, String format)
+            throws Exception {
+        List<Map<String, Object>> tempList = new ArrayList<>(dataForFormatting);
+        switch (format) {
+            case "plain" -> {
+                return Plain.plain(tempList);
+            }
+            case "json" -> {
+                return Json.json(tempList);
+            }
+            default -> {
+                return Stylish.stylish(tempList);
+            }
+        }
     }
 }

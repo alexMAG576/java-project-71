@@ -1,26 +1,26 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.Map;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-import java.util.Map;
 public class Parser {
-    public static Map<String, Object> parser(String content, String extension)
-            throws JsonProcessingException, IllegalArgumentException {
-        ObjectMapper objectMapper;
-        Map<String, Object> map;
-
-        if (extension.equals("yml")) {
-            objectMapper = new YAMLMapper();
-            map = objectMapper.readValue(content, new TypeReference<>() { });
-        } else if (extension.equals("json")) {
-            objectMapper = new ObjectMapper();
-            map = objectMapper.readValue(content, new TypeReference<>() { });
-        } else {
-            throw new IllegalArgumentException("Wrong extension - " + extension);
+    public static Map<String, Object> parse(String textToParse, String format) throws Exception {
+        switch (format) {
+            case "json" -> {
+                ObjectMapper mapper = new ObjectMapper();
+                return mapper.readValue(textToParse, new TypeReference<>() { });
+            }
+            case "yml", "yaml" -> {
+                ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+                return mapper.findAndRegisterModules()
+                        .readValue(textToParse, new TypeReference<>() { });
+            }
+            default -> {
+                System.out.println("There are files of unknown format");
+                return Map.of();
+            }
         }
-        return map;
     }
 }

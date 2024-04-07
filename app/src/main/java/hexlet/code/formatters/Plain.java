@@ -2,41 +2,41 @@ package hexlet.code.formatters;
 
 import java.util.List;
 import java.util.Map;
+
 public class Plain {
-    public static String plain(List<Map<String, Object>> diffList) {
-        StringBuilder resultStr = new StringBuilder();
 
-        for (var node : diffList) {
-            Object valOne = typeValue(node.get("value"));
-            Object valTwo = typeValue(node.get("updatedValue"));
-            Object type = node.get("type");
-            if (type.equals("UPDATED")) {
-                resultStr.append("Property '" + node.get("key") + "' was updated. From "
-                        + valOne + " to " + valTwo).append('\n');
-            } else if (type.equals("ADDED")) {
-                resultStr.append("Property '" + node.get("key") + "' was added with value: "
-                        + valTwo).append('\n');
-            } else if (type.equals("REMOVED")) {
-                resultStr.append("Property '" + node.get("key") + "' was removed").append('\n');
-            } else if (type.equals("UNCHANGED")) {
-                resultStr.append("");
-            } else {
-                throw new IllegalArgumentException(
-                        String.format("Unsupported status. Supported: %s, %s, %s, %s",
-                                "UNCHANGED", "UPDATED", "ADDED", "REMOVED"));
+    public static boolean isListOrMap(Object value) {
+        return value instanceof Map || value instanceof List;
+    }
+
+    public static boolean quotationsNeeded(Object value) {
+        return !isListOrMap(value) && !value.equals("null") && !value.equals(false)
+                && !value.equals(true) && !(value instanceof Number);
+    }
+
+    public static Object replaceComplexValueWithString(Object object) {
+        return isListOrMap(object) ? "[complex value]" : object;
+    }
+
+    public static String plain(List<Map<String, Object>> listForFormatting) {
+        StringBuilder formattedString = new StringBuilder();
+        listForFormatting.forEach(map -> {
+            var value1 = replaceComplexValueWithString(map.get("oldValue"));
+            var value2 = replaceComplexValueWithString(map.get("newValue"));
+            switch (map.get("type of change").toString()) {
+                case "add" -> formattedString.append(String.format(quotationsNeeded(map.get("newValue"))
+                        ? "Property '" + map.get("key") + "' was added with value: '" + value2 + "'\n"
+                        : "Property '" + map.get("key") + "' was added with value: " + value2 + "\n"));
+                case "delete" -> formattedString.append("Property '" + map.get("key") + "' was removed\n");
+                case "change" -> {
+                    String stringForOutput = "Property '%s' was updated. From "
+                            + (quotationsNeeded(map.get("oldValue")) ? "'%s' to " : "%s to ")
+                            + (quotationsNeeded(map.get("newValue")) ? "'%s'\n" : "%s\n");
+                    formattedString.append(String.format(stringForOutput, map.get("key"), value1, value2));
+                }
+                default -> { }
             }
-        }
-        return resultStr.toString().trim();
+        });
+        return formattedString.substring(0, formattedString.length() - 1);
     }
-    public static Object typeValue(Object object) {
-        Object value = object;
-        if (object instanceof Map || object instanceof List) {
-            value = "[complex value]";
-        } else if (object instanceof String) {
-            value = "'" + object + "'";
-        }
-        return value;
-    }
-
 }
-
