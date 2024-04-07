@@ -55,3 +55,4 @@ public class AppTest {
                 fixture("file_2.json"), "json");
         assertThat(result).isEqualTo(expected);
     }
+}
