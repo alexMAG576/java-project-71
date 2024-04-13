@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 public class AppTest {
     static final String PATH_TO_FIXTURE = "src/test/resources/fixtures/";
 

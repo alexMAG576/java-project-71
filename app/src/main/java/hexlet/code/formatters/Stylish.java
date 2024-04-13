@@ -18,7 +18,7 @@ public class Stylish {
                     formattedString.append(String.format("  - %s: %s\n", map.get("key"), map.get("oldValue")));
                     formattedString.append(String.format("  + %s: %s\n", map.get("key"), map.get("newValue")));
                 }
-                default -> { }
+                default -> System.out.println("The files are of different types");
             }
         });
         return formattedString.append("}").toString();
