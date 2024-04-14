@@ -13,7 +13,7 @@ install:
 	./app/gradlew -p app clean install
 
 run-dist:
-	@./app/build/install/app/bin/app -h
+	./app/build/install/app/bin/app ./app/src/test/resources/fixtures/file_1.json ./app/src/test/resources/fixtures/file_2.json
 
 run:
 	./app/gradlew -p app run
