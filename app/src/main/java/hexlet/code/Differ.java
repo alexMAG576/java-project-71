@@ -11,6 +11,9 @@ public class Differ {
         if (!endOfFile1.equals(endOfFile2)) {
             throw new DataFormatException("The files are of different types");
         }
+        if (!endOfFile1.equals("json") && !endOfFile1.equals("yaml") && !endOfFile1.equals("yml")) {
+            throw new DataFormatException("There are files of unknown format");
+        }
 
         String linesOfFile1 = Files.readString(Paths.get(filePath1).toAbsolutePath().normalize());
         String linesOfFile2 = Files.readString(Paths.get(filePath2).toAbsolutePath().normalize());
