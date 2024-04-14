@@ -1,16 +1,35 @@
+.DEFAULT_GOAL := build-run
+
+setup:
+	gradle wrapper --gradle-version 8.3
+
+clean:
+	./app/gradlew -p app clean
+
 build:
-	make -C app build
+	./app/gradlew -p app clean build
+
+install:
+	./app/gradlew -p app clean install
 
 run-dist:
-	make -C app run-dist
+	@./app/build/install/app/bin/app -h
+
+run:
+	./app/gradlew -p app run
 
 test:
-	make -C app test
+	./app/gradlew -p app test
 
 report:
-	make -C app report
+	./app/gradlew -p app jacocoTestReport
 
 lint:
-	make -C app lint
+	./app/gradlew -p app checkstyleMain
+
+check-deps:
+	./app/gradlew -p app dependencyUpdates -Drevision=release
+
+build-run: build run
 
 .PHONY: build
