@@ -34,7 +34,7 @@ public class Plain {
                             + (quotationsNeeded(map.get("newValue")) ? "'%s'\n" : "%s\n");
                     formattedString.append(String.format(stringForOutput, map.get("key"), value1, value2));
                 }
-                default -> System.out.println("There are files of unknown format");
+                default -> { }
             }
         });
         return formattedString.substring(0, formattedString.length() - 1);
